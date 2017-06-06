@@ -1,0 +1,56 @@
+{
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "heatmap": "webpack-dev-server --config ./webpack.config.js",
+    "heatmap-prod-build": "webpack -p --config ./webpack.config.js",
+    "heatmap-prod-watch": "webpack -p --config ./webpack.config.js -w"
+  },
+  "peerDependencies": {
+    "leaflet": "^1.0.0",
+    "react-leaflet": "^1.0.0",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-core": "^6.7.4",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-object-assign": "^1.2.1",
+    "babel-plugin-react-transform": "^2.0.0",
+    "babel-plugin-transform-proto-to-assign": "^6.4.0",
+    "babel-polyfill": "^6.7.4",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "eslint": "^3.15.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-arrow-function": "^2.0.0",
+    "eslint-plugin-lean-imports": "^0.3.3",
+    "eslint-plugin-react": "^7.0.1",
+    "leaflet": "^1.0.0",
+    "react": "^15.4.1",
+    "react-addons-test-utils": "^15.5.1",
+    "react-dom": "^15.4.1",
+    "react-leaflet": "^1.0.0",
+    "react-transform-hmr": "^1.0.4",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.3",
+    "express": "^4.15.3",
+    "lodash.filter": "^4.3.0",
+    "lodash.foreach": "^4.2.0",
+    "lodash.isnumber": "^3.0.3",
+    "lodash.map": "^4.3.0",
+    "lodash.max": "^4.0.0",
+    "lodash.min": "^4.0.0",
+    "lodash.pluck": "^3.1.2",
+    "lodash.reduce": "^4.3.0",
+    "react-leaflet-heatmap-layer": "^1.0.0",
+    "simpleheat": "^0.4.0"
+  }
+}

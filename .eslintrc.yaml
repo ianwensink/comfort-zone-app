@@ -1,0 +1,56 @@
+extends: airbnb
+rules:
+  keyword-spacing:
+    - 2
+    -
+      after: false
+      overrides:
+        from:
+          after: true
+        case:
+          after: true
+        return:
+          after: true
+        const:
+          after: true
+        let:
+          after: true
+        import:
+          after: true
+        export:
+          after: true
+        else:
+          after: true
+        try:
+          after: true
+  no-param-reassign:
+    - 2
+    -
+      props: false
+  max-len:
+    - 2
+    -
+      code: 140
+      ignoreComments: true
+      ignoreUrls: true
+      ignoreStrings: true
+      ignoreTemplateLiterals: true
+  jsx-quotes:
+    - 2
+    - prefer-single
+  no-return-assign:
+    - 1
+  no-console:
+    - 2
+    -
+      allow:
+        - "warn"
+        - "error"
+        - "info"
+  react/no-did-mount-set-state: 0
+
+parser: babel-eslint
+globals:
+  window: true
+  document: true
+  requestAnimationFrame: true

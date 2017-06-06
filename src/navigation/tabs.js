@@ -6,19 +6,16 @@
  */
 import React from 'react';
 import { Scene } from 'react-native-router-flux';
-
+import { Text } from 'react-native';
 // Consts and Libs
 import { AppConfig } from '@constants/';
-import { AppStyles, AppSizes } from '@theme/';
-
+import { AppSizes, AppStyles } from '@theme/';
 // Components
 import { TabIcon } from '@ui/';
 import { NavbarMenuButton } from '@containers/ui/NavbarMenuButton/NavbarMenuButtonContainer';
-
 // Scenes
 import Placeholder from '@components/general/Placeholder';
 import Error from '@components/general/Error';
-import StyleGuide from '@containers/StyleGuideView';
 import MapView from '@containers/map/MapView';
 
 const navbarPropsTabs = {
@@ -64,7 +61,7 @@ const scenes = (
       key={'styleGuide'}
       {...navbarPropsTabs}
       title={'Style Guide'}
-      component={StyleGuide}
+      component={() => <Text>bla</Text>}
       icon={props => TabIcon({ ...props, icon: 'speaker-notes' })}
       analyticsDesc={'StyleGuide: Style Guide'}
     />

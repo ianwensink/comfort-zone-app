@@ -1,10 +1,12 @@
 /* eslint-disable */
 var webpack = require('webpack');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 
 module.exports = {
   devtool: 'source-map',
   entry: {
-    app: __dirname + '/index.js',
+    app: __dirname + '/HeatMap.js',
   },
   module: {
     loaders: [
@@ -12,17 +14,6 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-        query: {
-          plugins: [
-            ['react-transform', {
-              transforms: [{
-                transform: 'react-transform-hmr',
-                imports: ['react'],
-                locals: ['module'],
-              }],
-            }],
-          ],
-        },
       },
     ],
   },
@@ -36,15 +27,19 @@ module.exports = {
       'process.env': {
         'NODE_ENV': '"development"',
         traceDeprecation: true,
+        SERVER_ADDR: '"http://192.168.0.101:3000"',
       },
     }),
-    // new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    new HTMLWebpackPlugin({
+      template: './index.ejs',
+      inlineSource: '.(js|css)$',
+    }),
+    new HtmlWebpackInlineSourcePlugin(),
   ],
   devServer: {
     contentBase: __dirname,
     historyApiFallback: true,
-    hot: true,
+    hot: false,
     inline: true,
     port: 8000,
     stats: {

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
-import { Platform, StyleSheet, View, WebView } from 'react-native';
-import heatmap from '../../../ios/assets/heatmap/heatmap.html';
+import { StyleSheet, View, WebView } from 'react-native';
+import heatmap from '../../../ios/assets/heatmap/build/index.html';
 
 class MapView extends Component {
   static componentName = 'MapView';
 
-   render() {
+  render() {
     const styles = StyleSheet.create({
       container: {
         width: '100%',
@@ -23,21 +22,12 @@ class MapView extends Component {
       },
     });
 
-    let webview = null;
-
-    // if (this.state.processedPoints) {
-      const uri = Platform.OS === 'ios' ? 'heatmap/heatmap.html' : 'file:///android_asset/heatmap/heatmap.html';
-      console.log('uri', uri);
-      // const maxValue = Math.max(...this.state.processedPoints.map((p) => p.value));
-      const script = heatmapInputGenerator();
-      webview = <WebView
-        source={ heatmap }
-        // scrollEnabled={false}
-        injectedJavaScript={script}
-        javaScriptEnabled
-        style={styles.map}
-      />;
-    // }
+    const webview = <WebView
+      source={heatmap}
+      scrollEnabled={false}
+      javaScriptEnabled
+      style={styles.map}
+    />;
 
     return (
       <View style={styles.container}>
@@ -49,7 +39,7 @@ class MapView extends Component {
 
 const heatmapInputGenerator = () => {
   return `
-    console.log('==============hallo=============');
+  
   `;
 };
 

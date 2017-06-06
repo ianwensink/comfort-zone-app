@@ -5,19 +5,12 @@
  * https://github.com/mcnamee/react-native-starter-app
  */
 import React, { Component, PropTypes } from 'react';
-import {
-  View,
-  Alert,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-
 // Consts and Libs
-import { AppStyles, AppSizes, AppColors } from '@theme/';
-
+import { AppColors, AppSizes, AppStyles } from '@theme/';
 // Components
-import { Spacer, Text, Button } from '@ui/';
+import { Button, Spacer, Text } from '@ui/';
 
 /* Styles ==================================================================== */
 const MENU_BG_COLOR = '#2E3234';
@@ -80,15 +73,7 @@ const styles = StyleSheet.create({
 /* Component ==================================================================== */
 class Menu extends Component {
   static propTypes = {
-    logout: PropTypes.func.isRequired,
     closeSideMenu: PropTypes.func.isRequired,
-    user: PropTypes.shape({
-      name: PropTypes.string,
-    }),
-  }
-
-  static defaultProps = {
-    user: null,
   }
 
   constructor() {
@@ -98,31 +83,20 @@ class Menu extends Component {
       menu: [
         {
           title: 'Recipes',
-          onPress: () => { this.props.closeSideMenu(); Actions.app(); },
+          onPress: () => {
+            this.props.closeSideMenu();
+            Actions.app();
+          },
         },
         {
           title: 'Example Link',
-          onPress: () => { this.props.closeSideMenu(); Actions.comingSoon(); },
+          onPress: () => {
+            this.props.closeSideMenu();
+            Actions.comingSoon();
+          },
         },
       ],
     };
-  }
-
-  login = () => {
-    this.props.closeSideMenu();
-    Actions.login();
-  }
-
-  logout = () => {
-    if(this.props.logout) {
-      this.props.logout()
-        .then(() => {
-          this.props.closeSideMenu();
-          Actions.login();
-        }).catch(() => {
-          Alert.alert('Oh uh!', 'Something went wrong.');
-        });
-    }
   }
 
   render = () => {
@@ -155,37 +129,8 @@ class Menu extends Component {
           <View style={[styles.menu]}>{menuItems}</View>
 
           <View style={[styles.menuBottom]}>
-            {this.props.user && this.props.user.name ?
-              <View>
-                <Text
-                  style={[
-                    styles.menuBottom_text,
-                    AppStyles.textCenterAligned,
-                  ]}
-                >
-                  Logged in as:{'\n'}
-                  {this.props.user.name}
-                </Text>
-
-                <Spacer size={10} />
-
-                <View style={[AppStyles.paddingHorizontal, AppStyles.paddingVerticalSml]}>
-                  <Button
-                    small
-                    title={'Log Out'}
-                    onPress={this.logout}
-                  />
-                </View>
-              </View>
-            :
-              <View style={[AppStyles.paddingHorizontal, AppStyles.paddingVerticalSml]}>
-                <Button
-                  small
-                  title={'Log In'}
-                  onPress={this.login}
-                />
-              </View>
-            }
+            <View style={[AppStyles.paddingHorizontal, AppStyles.paddingVerticalSml]}>
+            </View>
           </View>
         </View>
       </View>

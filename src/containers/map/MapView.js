@@ -37,10 +37,4 @@ class MapView extends Component {
   }
 }
 
-const heatmapInputGenerator = () => {
-  return `
-  
-  `;
-};
-
 export default MapView;

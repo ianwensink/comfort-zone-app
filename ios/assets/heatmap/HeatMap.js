@@ -12,7 +12,7 @@ class HeatMap extends React.Component {
     addressPoints: [],
     spot: 'london_bridge',
     event: '2',
-    interactive: true,
+    interactive: false,
   };
 
   componentDidMount() {

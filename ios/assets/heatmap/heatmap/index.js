@@ -11,6 +11,7 @@ const requestAnimationFrame = window.requestAnimationFrame;
 
 class HeatMap extends React.Component {
   lastFetch = null;
+  mounted = false;
 
   state = {
     points: [],
@@ -21,10 +22,19 @@ class HeatMap extends React.Component {
   };
 
   componentDidMount() {
+    this.mounted = true;
     requestAnimationFrame(() => this.interval());
   }
 
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   interval() {
+    if(!this.mounted) {
+      return;
+    }
+
     const now = new Date().getTime();
     if(!this.lastFetch) {
       this.lastFetch = now;
@@ -84,7 +94,8 @@ class HeatMap extends React.Component {
             markers={this.state.markers}
             longitudeExtractor={m => m.location.lng}
             latitudeExtractor={m => m.location.lat}
-            markerComponent={Marker} />
+            markerComponent={Marker}
+          />
           <HeatmapLayer
             fitBoundsOnLoad
             points={this.state.points}

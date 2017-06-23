@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, WebView } from 'react-native';
+import { onMessage } from '../webview/index';
 import heatmap from '../../../ios/assets/heatmap/build/index.html';
 
 class MapView extends Component {
@@ -27,6 +28,8 @@ class MapView extends Component {
       scrollEnabled={false}
       javaScriptEnabled
       style={styles.map}
+      // injectedJavaScript={`document.addEventListener('click', () => ${Actions.eventsDetail}(1))`}
+      onMessage={onMessage}
     />;
 
     return (

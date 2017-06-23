@@ -16,6 +16,7 @@ import Drawer from '@containers/ui/DrawerContainer';
 // Scenes
 import Placeholder from '@components/general/Placeholder';
 import TabsScenes from './tabs';
+import { Text } from 'react-native';
 
 /* Routes ==================================================================== */
 export default Actions.create(
@@ -27,6 +28,8 @@ export default Actions.create(
         {/* Tabbar */}
         {TabsScenes}
       </Scene>
+
+      <Scene key='eventsDetail' component={(props) => <Text>haha event detail {JSON.stringify(props)}</Text>} />
 
       {/* General */}
       <Scene

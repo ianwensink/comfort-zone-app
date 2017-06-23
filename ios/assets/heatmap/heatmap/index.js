@@ -15,10 +15,10 @@ class HeatMap extends React.Component {
 
   state = {
     points: [],
+    events: [],
     spot: 'london_bridge',
     event: '2',
     interactive: false,
-    markers: [],
   };
 
   componentDidMount() {
@@ -50,8 +50,11 @@ class HeatMap extends React.Component {
   fetchPoints() {
     fetch(`${process.env.SERVER_ADDR}/locations`)
       .then(res => res.json())
-      .then(points => {
-        this.setState({ points });
+      .then(response => {
+        this.setState({
+          points: response.points,
+          events: response.events,
+        });
       });
   }
 
@@ -90,18 +93,18 @@ class HeatMap extends React.Component {
       <div>
         <Map center={[51.5065658, -0.0888642]} zoom={15} onclick={e => this.onClick(e)}>
           <MarkerLayer
-            markers={this.state.markers}
-            longitudeExtractor={m => m.location.lng}
-            latitudeExtractor={m => m.location.lat}
+            markers={this.state.events}
+            longitudeExtractor={e => e.center.lng}
+            latitudeExtractor={e => e.center.lat}
             markerComponent={Marker}
           />
           <HeatmapLayer
             fitBoundsOnLoad
             points={this.state.points}
-            longitudeExtractor={m => m.lng}
-            latitudeExtractor={m => m.lat}
+            longitudeExtractor={p => p.lng}
+            latitudeExtractor={p => p.lat}
             gradient={gradient}
-            intensityExtractor={m => m.val}
+            intensityExtractor={p => p.val}
           />
           <TileLayer
             url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"

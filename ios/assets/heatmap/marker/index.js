@@ -5,13 +5,12 @@ class Marker extends Component {
   ref = null;
 
   onMarkerSelect(e) {
-    console.log('Click!', e);
     try {
       window.postMessage(JSON.stringify({
         action: 'goTo',
         page: 'eventsDetail',
         data: {
-          eventId: 1,
+          eventId: this.props.marker._id,
         },
       }));
     } catch(e) {}

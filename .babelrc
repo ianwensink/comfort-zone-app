@@ -2,6 +2,7 @@
   "presets": ["env", "react-native"],
   "plugins": [
     "transform-class-properties",
-    "transform-decorators-legacy"
+    "transform-decorators-legacy",
+    "transform-inline-environment-variables"
   ]
 }

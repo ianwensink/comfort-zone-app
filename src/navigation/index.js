@@ -28,7 +28,7 @@ export default Actions.create(
         {/* Tabbar */}
         {TabsScenes}
       </Scene>
-      {/*{console.log(AppConfig.navbarProps)}*/}
+
       <Scene key='eventsDetail' {...AppConfig.navbarProps} component={EventDetail} />
 
       {/* General */}

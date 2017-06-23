@@ -14,7 +14,6 @@ class EventDetailContainer extends Component {
   }
 
   componentDidMount() {
-    console.log(`${process.env.SERVER_ADDR}/events/${this.props.eventId}`);
     fetch(`${process.env.SERVER_ADDR}/events/${this.props.eventId}`)
       .then(res => res.json())
       .then(event => {

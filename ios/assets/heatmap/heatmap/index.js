@@ -18,12 +18,13 @@ class HeatMap extends React.Component {
     spot: 'london_bridge',
     event: '2',
     interactive: false,
-    markers: [{location: {"lat": 51.5065658, "lng": -0.0888643}}],
+    markers: [],
   };
 
   componentDidMount() {
     this.mounted = true;
     requestAnimationFrame(() => this.interval());
+    this.fetchPoints();
   }
 
   componentWillUnmount() {
@@ -39,7 +40,7 @@ class HeatMap extends React.Component {
     if(!this.lastFetch) {
       this.lastFetch = now;
     }
-    if(this.lastFetch + 1000 < now) {
+    if(this.lastFetch + 60000 < now) { // Fetch every minute
       this.lastFetch = now;
       this.fetchPoints();
     }
@@ -49,9 +50,7 @@ class HeatMap extends React.Component {
   fetchPoints() {
     fetch(`${process.env.SERVER_ADDR}/locations`)
       .then(res => res.json())
-      .then(pointsData => {
-        const points = [];
-        Object.values(pointsData).forEach(spot => Object.values(spot.events).forEach(event => event.points.forEach(point => points.push(point))));
+      .then(points => {
         this.setState({ points });
       });
   }

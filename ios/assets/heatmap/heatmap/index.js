@@ -1,18 +1,23 @@
 import React from 'react';
-import { render } from 'react-dom';
+import fetch from 'fetch-everywhere';
 import { Map, TileLayer } from 'react-leaflet';
 import HeatmapLayer from 'react-leaflet-heatmap-layer';
+import MarkerLayer from 'react-leaflet-marker-layer';
+import Marker from '../marker/index';
+
+MarkerLayer.prototype.createLeafletElement = () => {};
+
+const requestAnimationFrame = window.requestAnimationFrame;
 
 class HeatMap extends React.Component {
   lastFetch = null;
 
   state = {
-    mapHidden: false,
-    layerHidden: false,
-    addressPoints: [],
+    points: [],
     spot: 'london_bridge',
     event: '2',
     interactive: false,
+    markers: [{location: {"lat": 51.5065658, "lng": -0.0888643}}],
   };
 
   componentDidMount() {
@@ -37,11 +42,8 @@ class HeatMap extends React.Component {
       .then(pointsData => {
         const points = [];
         Object.values(pointsData).forEach(spot => Object.values(spot.events).forEach(event => event.points.forEach(point => points.push(point))));
-        this.setState({ addressPoints: points })
+        this.setState({ points });
       });
-  }
-
-  componentWillUnmount() {
   }
 
   onClick(e) {
@@ -77,16 +79,20 @@ class HeatMap extends React.Component {
 
     return (
       <div>
-        <Map center={[51.5065658, -0.0888643]} zoom={15} onclick={e => this.onClick(e)}>
-          {!this.state.layerHidden &&
+        <Map center={[51.5065658, -0.0888642]} zoom={15} onclick={e => this.onClick(e)}>
+          <MarkerLayer
+            markers={this.state.markers}
+            longitudeExtractor={m => m.location.lng}
+            latitudeExtractor={m => m.location.lat}
+            markerComponent={Marker} />
           <HeatmapLayer
-            points={this.state.addressPoints}
+            fitBoundsOnLoad
+            points={this.state.points}
             longitudeExtractor={m => m.lng}
             latitudeExtractor={m => m.lat}
             gradient={gradient}
-            intensityExtractor={m => parseFloat(m.val)}
+            intensityExtractor={m => m.val}
           />
-          }
           <TileLayer
             url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
           />
@@ -97,5 +103,3 @@ class HeatMap extends React.Component {
 }
 
 export default HeatMap;
-
-document.addEventListener('DOMContentLoaded', () => render(<HeatMap/>, document.getElementById('app')));

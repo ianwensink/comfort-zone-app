@@ -4,13 +4,13 @@
   "scripts": {
     "heatmap": "webpack-dev-server --config ./webpack.config.js",
     "heatmap-prod-build": "webpack -p --config ./webpack.config.js",
-    "heatmap-prod-watch": "webpack -p --config ./webpack.config.js -w"
+    "heatmap-build-watch": "webpack --config ./webpack.config.js -w"
   },
   "peerDependencies": {
     "leaflet": "^1.0.0",
-    "react-leaflet": "^1.0.0",
     "react": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "react-dom": "^15.4.1",
+    "react-leaflet": "github.com:OpenGov/react-leaflet-marker-layer#pull/5/head"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
@@ -42,6 +42,7 @@
     "body-parser": "^1.17.2",
     "cors": "^2.8.3",
     "express": "^4.15.3",
+    "fetch-everywhere": "^1.0.5",
     "html-webpack-inline-source-plugin": "0.0.9",
     "html-webpack-plugin": "^2.28.0",
     "lodash.filter": "^4.3.0",
@@ -53,6 +54,7 @@
     "lodash.pluck": "^3.1.2",
     "lodash.reduce": "^4.3.0",
     "react-leaflet-heatmap-layer": "^1.0.0",
+    "react-leaflet-marker-layer": "OpenGov/react-leaflet-marker-layer#5/head",
     "simpleheat": "^0.4.0"
   }
 }

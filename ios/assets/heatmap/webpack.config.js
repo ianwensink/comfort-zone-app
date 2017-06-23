@@ -3,15 +3,20 @@ var webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 
+const IP = '192.168.0.100';
+
 module.exports = {
   devtool: 'source-map',
   entry: {
-    app: __dirname + '/HeatMap.js',
+    app: __dirname + '/index.js',
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
@@ -20,14 +25,14 @@ module.exports = {
   output: {
     path: __dirname + '/build/',
     filename: '[name].js',
-    publicPath: 'http://localhost:8000/build',
+    publicPath: `http://${IP}:8000/build`,
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': '"development"',
         traceDeprecation: true,
-        SERVER_ADDR: '"http://192.168.0.101:3000"',
+        SERVER_ADDR: `"http://${IP}:3000"`,
       },
     }),
     new HTMLWebpackPlugin({

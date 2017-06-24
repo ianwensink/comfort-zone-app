@@ -14,14 +14,11 @@ import thunk from 'redux-thunk';
 import { Router } from 'react-native-router-flux';
 
 // Consts and Libs
-import { AppStyles } from '@theme/';
-import AppRoutes from '@navigation/';
+import { AppStyles } from './theme';
+import RootRouter from './navigation';
 
 // All redux reducers (rolled into one mega-reducer)
-import rootReducer from '@redux/index';
-
-// Connect RNRF with Redux
-const RouterWithRedux = connect()(Router);
+import rootReducer from './redux/index';
 
 // Load middleware
 let middleware = [
@@ -46,7 +43,7 @@ const store = compose(
 export default function AppContainer() {
   return (
     <Provider store={store}>
-      <RouterWithRedux scenes={AppRoutes} style={AppStyles.appContainer} />
+      <RootRouter />
     </Provider>
   );
 }

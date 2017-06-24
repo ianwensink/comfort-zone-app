@@ -1,3 +1,5 @@
+import Color from 'color';
+
 /**
  * App Theme - Colors
  *
@@ -13,10 +15,12 @@ const app = {
 
 const brand = {
   brand: {
-    primary: '#0E4EF8',
+    primary: '#0f9fee',
     secondary: '#17233D',
   },
 };
+
+brand.brand.darken15 = Color(brand.brand.primary).darken(0.15).hex();
 
 const text = {
   textPrimary: '#222222',

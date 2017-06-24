@@ -24,14 +24,13 @@ module.exports = {
   output: {
     path: __dirname + '/build/',
     filename: '[name].js',
-    publicPath: `http://${process.env.API_URL}:8000/build`,
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': '"development"',
         traceDeprecation: true,
-        SERVER_ADDR: `"http://${process.env.API_URL}:${process.env.API_PORT}"`,
+        SERVER_ADDR: `"${process.env.SERVER_ADDR}"`,
       },
     }),
     new HTMLWebpackPlugin({

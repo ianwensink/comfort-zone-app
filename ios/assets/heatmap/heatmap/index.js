@@ -19,6 +19,8 @@ class HeatMap extends React.Component {
     spot: 'london_bridge',
     event: '2',
     interactive: false,
+    followCurrentLocation: true,
+    currentLocation: [51.5065658, -0.0888642],
   };
 
   componentDidMount() {
@@ -91,7 +93,7 @@ class HeatMap extends React.Component {
 
     return (
       <div>
-        <Map center={[51.5065658, -0.0888642]} zoom={15} onclick={e => this.onClick(e)}>
+        <Map center={this.state.followCurrentLocation && this.state.currentLocation} zoom={15} onclick={e => this.onClick(e)}>
           <MarkerLayer
             markers={this.state.events}
             longitudeExtractor={e => e.center.lng}

@@ -7,9 +7,7 @@ import { AppStyles } from '../../theme';
 
 /* Component ==================================================================== */
 const TimelineItem = ({ event, navigation }) => (
-  <ListItem onPress={() => navigation.navigate('EventDetail', event)}>
-    <Text h1>{event.label}</Text>
-  </ListItem>
+  <ListItem onPress={() => navigation.navigate('EventDetail', event)} title={event.label} />
 );
 
 TimelineItem.propTypes = { event: PropTypes.shape({}) };

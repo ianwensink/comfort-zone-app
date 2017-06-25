@@ -28,8 +28,10 @@ class MapView extends Component {
       switch(json.action) {
         case 'connected':
           this.sendLocation();
+          break;
         case 'log':
           console.log('WebView log:', json);
+          break;
         case 'goTo':
         default:
           this.props.navigation.navigate(json.page, json.data);

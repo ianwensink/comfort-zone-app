@@ -4,8 +4,8 @@ import { Map, TileLayer } from 'react-leaflet';
 import HeatmapLayer from 'react-leaflet-heatmap-layer';
 import MarkerLayer from 'react-leaflet-marker-layer';
 import Marker from '../marker/index';
-
-MarkerLayer.prototype.createLeafletElement = () => {};
+import CurrentPosition from '../current-position';
+import RNMsgChannel from 'react-native-webview-messaging';
 
 const requestAnimationFrame = window.requestAnimationFrame;
 
@@ -20,13 +20,37 @@ class HeatMap extends React.Component {
     event: '2',
     interactive: false,
     followCurrentLocation: true,
-    currentLocation: [51.5065658, -0.0888642],
+    currentPosition: {
+      lat: 51.5035658,
+      lng: -0.0888642,
+    },
   };
 
   componentDidMount() {
     this.mounted = true;
     requestAnimationFrame(() => this.interval());
     this.fetchPoints();
+    this.setUpMsgChannel();
+  }
+
+  setUpMsgChannel() {
+    if(RNMsgChannel) {
+      try {
+        window.postMessage(JSON.stringify({
+          type: 'json',
+          payload: { action: 'connected' },
+        }));
+        RNMsgChannel.on('json', json => {
+          if(json.payload.currentPosition) {
+            this.setState({ currentPosition: json.payload.currentPosition });
+          }
+        });
+      } catch(e) {
+        setTimeout(() => this.setUpMsgChannel(), 1000);
+      }
+    } else {
+      setTimeout(() => this.setUpMsgChannel(), 1000);
+    }
   }
 
   componentWillUnmount() {
@@ -38,7 +62,7 @@ class HeatMap extends React.Component {
       return;
     }
 
-    const now = new Date().getTime();
+    const now = Date.now();
     if(!this.lastFetch) {
       this.lastFetch = now;
     }
@@ -93,18 +117,24 @@ class HeatMap extends React.Component {
 
     return (
       <div>
-        <Map center={this.state.followCurrentLocation && this.state.currentLocation} zoom={15} onclick={e => this.onClick(e)}>
+        <Map center={this.state.followCurrentLocation && this.state.currentPosition} zoom={15} onclick={e => this.onClick(e)}>
           <MarkerLayer
             markers={this.state.events}
-            longitudeExtractor={e => e.center.lng}
             latitudeExtractor={e => e.center.lat}
+            longitudeExtractor={e => e.center.lng}
             markerComponent={Marker}
+          />
+          <MarkerLayer
+            markers={[this.state.currentPosition]}
+            latitudeExtractor={l => l.lat}
+            longitudeExtractor={l => l.lng}
+            markerComponent={CurrentPosition}
           />
           <HeatmapLayer
             fitBoundsOnLoad
             points={this.state.points}
-            longitudeExtractor={p => p.lng}
             latitudeExtractor={p => p.lat}
+            longitudeExtractor={p => p.lng}
             gradient={gradient}
             intensityExtractor={p => p.val}
           />

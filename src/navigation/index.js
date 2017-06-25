@@ -13,7 +13,7 @@ import EventDetail from '../containers/timeline/event-detail';
 import Timeline from '../containers/timeline';
 // Components
 import { StackNavigator, TabNavigator } from 'react-navigation';
-import { Button, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 
 export const TimelineStack = StackNavigator({
     Timeline: {

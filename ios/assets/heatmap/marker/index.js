@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { colors } from '../theme.js'
+import { colors } from '../theme.js';
+import RNMsgChannel from 'react-native-webview-messaging';
 
 class Marker extends Component {
   state = {};
@@ -7,13 +8,13 @@ class Marker extends Component {
 
   onMarkerSelect() {
     try {
-      window.postMessage(JSON.stringify({
+      RNMsgChannel.sendJSON({
         action: 'goTo',
         page: 'EventDetail',
         data: this.props.marker,
-      }));
+      });
     } catch(e) {
-      console.warn('postMessage failed')
+      console.warn('postMessage failed');
     }
   }
 
@@ -31,6 +32,8 @@ class Marker extends Component {
       icon: {
         width: '32px',
         height: '32px',
+        marginTop: '-16px',
+        marginLeft: '-16px',
       },
     };
 

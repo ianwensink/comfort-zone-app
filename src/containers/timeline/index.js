@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { ListView, Text, View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import fetch from 'fetch-everywhere';
-import { Actions } from 'react-native-router-flux';
 import Loading from '../../components/general/Loading';
 import { AppStyles } from '../../theme';
 import Timeline from '../../components/timeline';
@@ -26,8 +25,9 @@ class TimelineContainer extends Component {
       return <Loading text='Loading events...' />;
     }
 
-    return(
+    return (
       <View style={[AppStyles.container]}>
+        <StatusBar />
         <Timeline
           events={this.state.events}
           navigation={this.props.navigation}

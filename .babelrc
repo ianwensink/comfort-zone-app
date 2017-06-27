@@ -1,5 +1,5 @@
 {
-  "presets": ["env", "react-native"],
+  "presets": ["react-native"],
   "plugins": [
     "transform-class-properties",
     "transform-decorators-legacy",

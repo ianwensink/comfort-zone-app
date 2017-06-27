@@ -6,6 +6,7 @@ import MarkerLayer from 'react-leaflet-marker-layer';
 import Marker from '../marker/index';
 import CurrentPosition from '../current-position';
 import RNMsgChannel from 'react-native-webview-messaging';
+import LocationController from '../LocationController';
 
 const requestAnimationFrame = window.requestAnimationFrame;
 
@@ -19,11 +20,16 @@ class HeatMap extends React.Component {
     spot: 'london_bridge',
     event: '2',
     interactive: false,
-    followCurrentLocation: true,
+    followCurrentPosition: true,
     currentPosition: {
       lat: 51.5035658,
       lng: -0.0888642,
     },
+    latestPosition: {
+      lat: 51.5035658,
+      lng: -0.0888642,
+    },
+    latestZoom: 15,
   };
 
   componentDidMount() {
@@ -42,7 +48,13 @@ class HeatMap extends React.Component {
         }));
         RNMsgChannel.on('json', json => {
           if(json.payload.currentPosition) {
-            this.setState({ currentPosition: json.payload.currentPosition });
+            const newState = {
+              currentPosition: json.payload.currentPosition,
+            }
+            if(this.state.followCurrentPosition) {
+              newState.latestPosition = json.payload.currentPosition;
+            }
+            this.setState(newState);
           }
         });
       } catch(e) {
@@ -117,18 +129,37 @@ class HeatMap extends React.Component {
 
     return (
       <div>
-        <Map center={this.state.followCurrentLocation && this.state.currentPosition} zoom={15} onclick={e => this.onClick(e)}>
+        <Map
+          center={this.state.followCurrentPosition ? this.state.currentPosition : this.state.latestPosition}
+          zoom={this.state.followCurrentPosition ? 15 : this.state.latestZoom}
+          onclick={e => this.onClick(e)}
+          onMovestart={() => {
+            if(this.map) {
+              const newPosition = this.map.leafletElement.getCenter();
+              if(newPosition.lat !== this.state.latestPosition.lat || newPosition.lng !== this.state.latestPosition.lng) {
+                this.setState({
+                  followCurrentPosition: false,
+                });
+              }
+            }
+          }}
+          onMoveend={() => this.map && this.setState({
+            latestPosition: this.map.leafletElement.getCenter(),
+            latestZoom: this.map.leafletElement.getZoom(),
+          })}
+          ref={c => this.map = c}
+        >
           <MarkerLayer
-            markers={this.state.events}
-            latitudeExtractor={e => e.center.lat}
-            longitudeExtractor={e => e.center.lng}
-            markerComponent={Marker}
+          markers={this.state.events}
+          latitudeExtractor={e => e.center.lat}
+          longitudeExtractor={e => e.center.lng}
+          markerComponent={Marker}
           />
           <MarkerLayer
-            markers={[this.state.currentPosition]}
-            latitudeExtractor={l => l.lat}
-            longitudeExtractor={l => l.lng}
-            markerComponent={CurrentPosition}
+          markers={[this.state.currentPosition]}
+          latitudeExtractor={l => l.lat}
+          longitudeExtractor={l => l.lng}
+          markerComponent={CurrentPosition}
           />
           <HeatmapLayer
             fitBoundsOnLoad
@@ -142,6 +173,12 @@ class HeatMap extends React.Component {
             url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
           />
         </Map>
+        <LocationController followCurrentPosition={this.state.followCurrentPosition} toggleState={() => {
+          this.setState({
+            followCurrentPosition: !this.state.followCurrentPosition,
+            latestPosition: this.state.currentPosition,
+          });
+        }} />
       </div>
     );
   }

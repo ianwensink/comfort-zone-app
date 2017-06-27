@@ -17,7 +17,8 @@ class TimelineContainer extends Component {
       .then(res => res.json())
       .then(events => {
         this.setState({ events });
-      });
+      })
+      .catch(console.error);
   }
 
   render() {

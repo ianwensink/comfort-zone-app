@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 // Consts and Libs
 import TimelineItem from './TimelineItem';
 import { List } from 'react-native-elements';
@@ -7,7 +7,7 @@ import { List } from 'react-native-elements';
 /* Component ==================================================================== */
 const Timeline = ({ events, navigation }) => {
   return (
-    <View>
+    <ScrollView>
       <List containerStyle={{ marginBottom: 20 }}>
         {events.map(event =>
           <TimelineItem
@@ -17,7 +17,7 @@ const Timeline = ({ events, navigation }) => {
           />
         )}
       </List>
-    </View>
+    </ScrollView>
   );
 };
 

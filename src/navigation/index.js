@@ -15,6 +15,22 @@ import Timeline from '../containers/timeline';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
+export const MapStack = StackNavigator({
+    Map: {
+      screen: Map,
+      navigationOptions: {
+        title: 'Map',
+      },
+    },
+    EventDetail: {
+      screen: EventDetail,
+      navigationOptions: ({ navigation }) => ({
+        title: navigation.state.params.label,
+      }),
+    },
+  }
+);
+
 export const TimelineStack = StackNavigator({
     Timeline: {
       screen: Timeline,
@@ -33,11 +49,12 @@ export const TimelineStack = StackNavigator({
 
 export const Tabs = TabNavigator({
   Map: {
-    screen: Map,
+    screen: MapStack,
     navigationOptions: {
       title: 'Map',
+      header: null,
       tabBarLabel: 'Map',
-      tabBarIcon: ({ tintColor }) => <Icon name='map' size={26} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Icon name='map' size={26} color={tintColor} />,
     },
   },
   Timeline: {

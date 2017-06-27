@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View,Button } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import fetch from 'fetch-everywhere';
 import { Actions } from 'react-native-router-flux';
 import Loading from '../../../components/general/Loading';
@@ -8,6 +9,19 @@ import EventDetail from '../../../components/timeline/event-detail';
 
 class EventDetailContainer extends Component {
   static componentName = 'EventDetailContainer';
+  // static navigationOptions = ({navigation}) => ({
+  //   headerLeft: <Button title="Back" onPress={() => {
+  //     const resetAction = NavigationActions.reset({
+  //       index: 0,
+  //       actions: [
+  //         NavigationActions.navigate({ routeName: 'Map'})
+  //       ]
+  //     });
+  //
+  //     navigation.dispatch(resetAction)
+  //   }
+  //   }/>
+  // })
 
   constructor(props) {
     super(props);

@@ -2,12 +2,21 @@ import React, { PropTypes } from 'react';
 import { ScrollView } from 'react-native';
 // Consts and Libs
 import TimelineItem from './TimelineItem';
-import { List } from 'react-native-elements';
+import { List, SearchBar } from 'react-native-elements';
 
 /* Component ==================================================================== */
-const Timeline = ({ events, navigation }) => {
+const Timeline = ({ events, navigation, onSearch }) => {
   return (
     <ScrollView>
+      <SearchBar
+        onChangeText={onSearch}
+        lightTheme
+        placeholder='Search...'
+        autoCapatilize={false}
+        autoCorrect={false}
+        clearIcon={true}
+        textInputRef='search'
+      />
       <List containerStyle={{ marginBottom: 20 }}>
         {events.map(event =>
           <TimelineItem

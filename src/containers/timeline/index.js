@@ -10,6 +10,7 @@ class TimelineContainer extends Component {
 
   state = {
     events: false,
+    query: '',
   }
 
   componentDidMount() {
@@ -21,6 +22,14 @@ class TimelineContainer extends Component {
       .catch(console.error);
   }
 
+  filterEvents(events) {
+    return events.filter(event => event.label.toLowerCase().includes(this.state.query.toLowerCase()));
+  }
+
+  onSearch(query) {
+    this.setState({ query });
+  }
+
   render() {
     if(!this.state.events) {
       return <Loading text='Loading events...' />;
@@ -30,8 +39,9 @@ class TimelineContainer extends Component {
       <View style={[AppStyles.container]}>
         <StatusBar />
         <Timeline
-          events={this.state.events}
+          events={this.filterEvents(this.state.events)}
           navigation={this.props.navigation}
+          onSearch={(e) => this.onSearch(e)}
         />
       </View>
     );

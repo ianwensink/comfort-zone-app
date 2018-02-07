@@ -109,6 +109,25 @@ class HeatMap extends React.Component {
     });
   }
 
+  onMoveStart = () => {
+    if(this.map) {
+      this.currentBounds = this.map.leafletElement.getBounds();
+    }
+  };
+
+  onMoveEnd = () => {
+    if(this.map) {
+      this.setState({
+        latestPosition: this.map.leafletElement.getCenter(),
+        latestZoom: this.map.leafletElement.getZoom(),
+      });
+      const newBounds = this.map.leafletElement.getBounds();
+      if(this.currentBounds && JSON.stringify(this.currentBounds) !== JSON.stringify(newBounds)) {
+        this.setState({ followCurrentPosition: false });
+      }
+    }
+  };
+
   render() {
     const gradient = {
       0.1: '#89BDE0', 0.2: '#96E3E6', 0.4: '#82CEB6',
@@ -121,20 +140,8 @@ class HeatMap extends React.Component {
           center={this.state.followCurrentPosition ? this.state.currentPosition : this.state.latestPosition}
           zoom={this.state.followCurrentPosition ? 15 : this.state.latestZoom}
           onclick={e => this.onClick(e)}
-          onMovestart={() => {
-            if(this.map) {
-              const newPosition = this.map.leafletElement.getCenter();
-              if(newPosition.lat !== this.state.latestPosition.lat || newPosition.lng !== this.state.latestPosition.lng) {
-                this.setState({
-                  followCurrentPosition: false,
-                });
-              }
-            }
-          }}
-          onMoveend={() => this.map && this.setState({
-            latestPosition: this.map.leafletElement.getCenter(),
-            latestZoom: this.map.leafletElement.getZoom(),
-          })}
+          onMovestart={this.onMoveStart}
+          onMoveend={this.onMoveEnd}
           ref={c => this.map = c}
         >
           <MarkerLayer

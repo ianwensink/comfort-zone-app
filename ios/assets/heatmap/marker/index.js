@@ -1,21 +1,15 @@
 import React, { Component } from 'react';
 import { colors } from '../theme.js';
-import RNMsgChannel from 'react-native-webview-messaging';
 
 class Marker extends Component {
   state = {};
   ref = null;
 
   onMarkerSelect() {
-    try {
-      RNMsgChannel.sendJSON({
-        action: 'goTo',
-        page: 'EventDetail',
-        data: this.props.marker,
-      });
-    } catch(e) {
-      console.warn('postMessage failed');
-    }
+    this.props.remote.emit('navigate', {
+      page: 'EventDetail',
+      data: this.props.marker,
+    });
   }
 
   render() {

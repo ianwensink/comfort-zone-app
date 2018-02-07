@@ -5,10 +5,8 @@ import HeatmapLayer from 'react-leaflet-heatmap-layer';
 import MarkerLayer from 'react-leaflet-marker-layer';
 import Marker from '../marker/index';
 import CurrentPosition from '../current-position';
-import RNMsgChannel from 'react-native-webview-messaging';
 import LocationController from '../LocationController';
-
-const requestAnimationFrame = window.requestAnimationFrame;
+import { connectToRemote } from 'react-native-webview-messaging/web';
 
 class HeatMap extends React.Component {
   lastFetch = null;
@@ -34,35 +32,25 @@ class HeatMap extends React.Component {
 
   componentDidMount() {
     this.mounted = true;
-    requestAnimationFrame(() => this.interval());
+    window.requestAnimationFrame(() => this.interval());
     this.fetchPoints();
     this.setUpMsgChannel();
   }
 
-  setUpMsgChannel() {
-    if(RNMsgChannel) {
-      try {
-        window.postMessage(JSON.stringify({
-          type: 'json',
-          payload: { action: 'connected' },
-        }));
-        RNMsgChannel.on('json', json => {
-          if(json.payload.currentPosition) {
-            const newState = {
-              currentPosition: json.payload.currentPosition,
-            }
-            if(this.state.followCurrentPosition) {
-              newState.latestPosition = json.payload.currentPosition;
-            }
-            this.setState(newState);
-          }
-        });
-      } catch(e) {
-        setTimeout(() => this.setUpMsgChannel(), 1000);
+  async setUpMsgChannel() {
+    this.remote = await connectToRemote();
+
+    this.remote.emit('connected');
+
+    this.remote.on('location', json => {
+      const newState = {
+        currentPosition: json.payload.currentPosition,
+      };
+      if(this.state.followCurrentPosition) {
+        newState.latestPosition = json.payload.currentPosition;
       }
-    } else {
-      setTimeout(() => this.setUpMsgChannel(), 1000);
-    }
+      this.setState(newState);
+    });
   }
 
   componentWillUnmount() {
@@ -82,7 +70,7 @@ class HeatMap extends React.Component {
       this.lastFetch = now;
       this.fetchPoints();
     }
-    requestAnimationFrame(() => this.interval());
+    window.requestAnimationFrame(() => this.interval());
   }
 
   fetchPoints() {
@@ -150,16 +138,19 @@ class HeatMap extends React.Component {
           ref={c => this.map = c}
         >
           <MarkerLayer
-          markers={this.state.events}
-          latitudeExtractor={e => e.center.lat}
-          longitudeExtractor={e => e.center.lng}
-          markerComponent={Marker}
+            markers={this.state.events}
+            latitudeExtractor={e => e.center.lat}
+            longitudeExtractor={e => e.center.lng}
+            markerComponent={Marker}
+            propsForMarkers={{
+              remote: this.remote,
+            }}
           />
           <MarkerLayer
-          markers={[this.state.currentPosition]}
-          latitudeExtractor={l => l.lat}
-          longitudeExtractor={l => l.lng}
-          markerComponent={CurrentPosition}
+            markers={[this.state.currentPosition]}
+            latitudeExtractor={l => l.lat}
+            longitudeExtractor={l => l.lng}
+            markerComponent={CurrentPosition}
           />
           <HeatmapLayer
             fitBoundsOnLoad

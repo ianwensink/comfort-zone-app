@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { WebView } from 'react-native-webview-messaging/WebView';
+import { WebView, connectToRemote } from 'react-native-webview-messaging';
 import heatmap from '../../../ios/assets/heatmap/build/index.html';
 
 class MapView extends Component {
@@ -11,10 +11,9 @@ class MapView extends Component {
       lat: 0,
       lng: 0,
     }
-  }
+  };
 
   componentDidMount() {
-    this.watchPosition();
     this.setUpMsgChannel();
   }
 
@@ -23,20 +22,14 @@ class MapView extends Component {
     clearTimeout(this.setUpTimeout);
   }
 
-  setUpMsgChannel() {
-    this.webview.messagesChannel.on('json', json => {
-      switch(json.action) {
-        case 'connected':
-          this.sendLocation();
-          break;
-        case 'log':
-          console.log('WebView log:', json);
-          break;
-        case 'goTo':
-        default:
-          this.props.navigation.navigate(json.page, json.data);
-      }
-    });
+  async setUpMsgChannel() {
+    this.remote = await connectToRemote(this.webview);
+
+    this.watchPosition();
+
+    this.remote.on('connected', () => this.sendLocation());
+    this.remote.on('log', json => console.log('WebView log:', json));
+    this.remote.on('navigate', json => this.props.navigation.navigate(json.page, json.data));
   }
 
   watchPosition() {
@@ -59,7 +52,7 @@ class MapView extends Component {
 
   sendLocation() {
     // console.info('Sending location:', this.state.currentPosition);
-    this.webview.sendJSON({
+    this.remote.emit('location', {
       payload: {
         currentPosition: this.state.currentPosition,
       },

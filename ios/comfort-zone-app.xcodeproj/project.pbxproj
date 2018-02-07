@@ -47,7 +47,6 @@
 		28D2C0834B5E4A22979BA619 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D8BBEDF519042759A707B3E /* SimpleLineIcons.ttf */; };
 		5F0EEB8B9F8C4662B9A027E0 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76B4297855494CEB972094A0 /* Zocial.ttf */; };
 		207C61C6A3734F18BC006B28 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 862B3D60538D4F2FA52D6DE5 /* libRNDeviceInfo.a */; };
-		62AD8017AF2645979B65D0B6 /* libRNDeviceInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EEB5B65C8B7940B58D66AEE5 /* libRNDeviceInfo-tvOS.a */; };
 		1F96B83324904F75B8C9B6F1 /* libRCTGoogleAnalyticsBridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09CD45D688CD4610A4C0124C /* libRCTGoogleAnalyticsBridge.a */; };
 		1332471BD391450AA531D5B3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8CEEE318444AC3A664CC74 /* CoreData.framework */; };
 		C04953D76E7F42F2AA4F7C5C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C04A1A503AE4580BD6E64DF /* SystemConfiguration.framework */; };
@@ -317,7 +316,6 @@
 		76B4297855494CEB972094A0 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		B28FE24096FA47AA8BCF4FF4 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; name = "RNDeviceInfo.xcodeproj"; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		862B3D60538D4F2FA52D6DE5 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; name = "libRNDeviceInfo.a"; path = "libRNDeviceInfo.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		EEB5B65C8B7940B58D66AEE5 /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; name = "libRNDeviceInfo-tvOS.a"; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		6B1316A431AD4409B81CB8AF /* RCTGoogleAnalyticsBridge.xcodeproj */ = {isa = PBXFileReference; name = "RCTGoogleAnalyticsBridge.xcodeproj"; path = "../node_modules/react-native-google-analytics-bridge/ios/RCTGoogleAnalyticsBridge/RCTGoogleAnalyticsBridge.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		09CD45D688CD4610A4C0124C /* libRCTGoogleAnalyticsBridge.a */ = {isa = PBXFileReference; name = "libRCTGoogleAnalyticsBridge.a"; path = "libRCTGoogleAnalyticsBridge.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		7B8CEEE318444AC3A664CC74 /* CoreData.framework */ = {isa = PBXFileReference; name = "CoreData.framework"; path = "System/Library/Frameworks/CoreData.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
@@ -356,7 +354,6 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				B34DF03C8CA9499FAAA9B1A1 /* libRNVectorIcons.a in Frameworks */,
 				207C61C6A3734F18BC006B28 /* libRNDeviceInfo.a in Frameworks */,
-				62AD8017AF2645979B65D0B6 /* libRNDeviceInfo-tvOS.a in Frameworks */,
 				1F96B83324904F75B8C9B6F1 /* libRCTGoogleAnalyticsBridge.a in Frameworks */,
 				1332471BD391450AA531D5B3 /* CoreData.framework in Frameworks */,
 				C04953D76E7F42F2AA4F7C5C /* SystemConfiguration.framework in Frameworks */,

@@ -11,7 +11,7 @@ class TimelineContainer extends Component {
   state = {
     events: false,
     query: '',
-  }
+  };
 
   componentDidMount() {
     fetch(`${process.env.SERVER_ADDR}/events`)

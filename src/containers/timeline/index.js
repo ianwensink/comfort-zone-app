@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StatusBar, View } from 'react-native';
 import fetch from 'fetch-everywhere';
+import moment from 'moment';
 import Loading from '../../components/general/Loading';
 import { AppStyles } from '../../theme';
 import Timeline from '../../components/timeline';
@@ -22,8 +23,18 @@ class TimelineContainer extends Component {
       .catch(console.error);
   }
 
+  getEvents() {
+    return this.sortEvents(this.filterEvents(this.state.events));
+  }
+
   filterEvents(events) {
     return events.filter(event => event.label.toLowerCase().includes(this.state.query.toLowerCase()));
+  }
+
+  sortEvents(events) {
+    return events.sort((a, b) => {
+      return moment(b.timestamp).unix() - moment(a.timestamp).unix();
+    });
   }
 
   onSearch(query) {
@@ -39,7 +50,7 @@ class TimelineContainer extends Component {
       <View style={[AppStyles.container]}>
         <StatusBar />
         <Timeline
-          events={this.filterEvents(this.state.events)}
+          events={this.getEvents()}
           navigation={this.props.navigation}
           onSearch={(e) => this.onSearch(e)}
         />

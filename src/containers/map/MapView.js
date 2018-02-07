@@ -28,7 +28,10 @@ class MapView extends Component {
     this.watchPosition();
 
     this.remote.on('connected', () => this.sendLocation());
-    this.remote.on('log', json => console.log('WebView log:', json));
+    this.remote.on('log', data => {
+      const log = Array.isArray(data) ? data : [data];
+      console.log('WebView log:', ...log );
+    });
     this.remote.on('navigate', json => this.props.navigation.navigate(json.page, json.data));
   }
 

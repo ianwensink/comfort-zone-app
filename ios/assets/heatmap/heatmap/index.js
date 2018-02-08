@@ -74,7 +74,7 @@ class HeatMap extends React.Component {
   }
 
   fetchPoints() {
-    fetch(`${process.env.SERVER_ADDR}/locations`)
+    fetch(`${process.env.SERVER_ADDR}/heatmap`)
       .then(res => res.json())
       .then(response => {
         this.setState({
@@ -91,7 +91,7 @@ class HeatMap extends React.Component {
   }
 
   processLocation(e) {
-    fetch(`${process.env.SERVER_ADDR}/location`, {
+    fetch(`${process.env.SERVER_ADDR}/point`, {
       method: 'POST',
       credentials: 'same-origin',
       headers: new Headers({
@@ -100,7 +100,7 @@ class HeatMap extends React.Component {
       }),
       body: JSON.stringify({
         spot: this.state.spot,
-        event: this.state.event,
+        event: this.state.location,
         location: {
           lat: e.latlng.lat,
           lng: e.latlng.lng,

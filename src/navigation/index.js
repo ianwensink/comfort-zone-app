@@ -8,9 +8,11 @@ import React from 'react';
 // Consts and Libs
 // Scenes
 import Placeholder from '../components/general/Placeholder';
-import Map from '../containers/map/MapView';
-import EventDetail from '../containers/timeline/event-detail';
-import Timeline from '../containers/timeline';
+import Map from '../scenes/map/MapView';
+import EventDetail from '../scenes/timeline/event-detail';
+import Timeline from '../scenes/timeline';
+import POISContainer from '../scenes/pois';
+
 // Components
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
@@ -67,11 +69,11 @@ export const Tabs = TabNavigator({
     },
   },
   Schedule: {
-    screen: Placeholder,
+    screen: POISContainer,
     navigationOptions: {
-      title: 'Schedule',
-      tabBarLabel: 'Schedule',
-      tabBarIcon: ({ tintColor }) => <Icon name='list' size={26} color={tintColor} />
+      title: 'POI\'s',
+      tabBarLabel: 'POI\'s',
+      tabBarIcon: ({ tintColor }) => <Icon name='place' size={26} color={tintColor} />
     },
   },
   Settings: {

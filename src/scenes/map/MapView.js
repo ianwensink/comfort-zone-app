@@ -3,29 +3,23 @@ import { StyleSheet, View } from 'react-native';
 import { WebView, connectToRemote } from 'react-native-webview-messaging';
 import heatmap from '../../../ios/assets/heatmap/build/index.html';
 
+import WatchPositionHoc from '../../hoc/WatchPositionHOC';
+
 class MapView extends Component {
   static componentName = 'MapView';
-
-  state = {
-    currentPosition: {
-      lat: 0,
-      lng: 0,
-    }
-  };
 
   componentDidMount() {
     this.setUpMsgChannel();
   }
 
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchId);
-    clearTimeout(this.setUpTimeout);
+  componentWillReceiveProps(nextProps) {
+    if(JSON.stringify(nextProps.currentPosition) !== JSON.stringify(this.props.currentPosition)) {
+      this.sendLocation();
+    }
   }
 
   async setUpMsgChannel() {
     this.remote = await connectToRemote(this.webview);
-
-    this.watchPosition();
 
     this.remote.on('connected', () => this.sendLocation());
     this.remote.on('log', data => {
@@ -35,31 +29,14 @@ class MapView extends Component {
     this.remote.on('navigate', json => this.props.navigation.navigate(json.page, json.data));
   }
 
-  watchPosition() {
-    this.watchId = navigator.geolocation.watchPosition((position) => {
-      if(
-        position.coords.latitude !== this.state.currentPosition.lat ||
-        position.coords.longitude !== this.state.currentPosition.lng
-      ) {
-        const newLocation = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        this.setState({ currentPosition: newLocation }, this.sendLocation);
-      }
-    }, console.warn, {
-      maximumAge: 10000,
-      distanceFilter: 0,
-    });
-  }
-
   sendLocation() {
-    // console.info('Sending location:', this.state.currentPosition);
-    this.remote.emit('location', {
-      payload: {
-        currentPosition: this.state.currentPosition,
-      },
-    });
+    if(this.remote) {
+      this.remote.emit('location', {
+        payload: {
+          currentPosition: this.props.currentPosition,
+        },
+      });
+    }
   }
 
   render() {
@@ -95,4 +72,4 @@ class MapView extends Component {
   }
 }
 
-export default MapView;
+export default WatchPositionHoc(MapView);

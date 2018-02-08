@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ScrollView } from 'react-native';
 // Consts and Libs
-import TimelineItem from './TimelineItem';
+import POIListItem from './POIListItem';
 import { List, SearchBar } from 'react-native-elements';
 
 /* Component ==================================================================== */
-const Timeline = ({ events, navigation, onSearch }) => {
+const POIList = ({ locations, navigation, onSearch }) => {
   return (
     <ScrollView>
       <SearchBar
@@ -19,10 +19,10 @@ const Timeline = ({ events, navigation, onSearch }) => {
         textInputRef='search'
       />
       <List containerStyle={{ marginBottom: 20 }}>
-        {events.map(event =>
-          <TimelineItem
-            key={event._id}
-            event={event}
+        {locations.map(location =>
+          <POIListItem
+            key={location._id}
+            location={location}
             navigation={navigation}
           />
         )}
@@ -31,8 +31,8 @@ const Timeline = ({ events, navigation, onSearch }) => {
   );
 };
 
-Timeline.propTypes = { events: PropTypes.arrayOf(PropTypes.shape({})) };
-Timeline.componentName = 'Timeline';
+POIList.propTypes = { locations: PropTypes.arrayOf(PropTypes.shape({})) };
+POIList.componentName = 'POIList';
 
 /* Export Component ==================================================================== */
-export default Timeline;
+export default POIList;

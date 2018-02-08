@@ -5,21 +5,21 @@ import { ListItem } from 'react-native-elements';
 import moment from 'moment';
 
 // Consts and Libs
-import { AppStyles } from '../../theme';
+import { AppStyles } from '../../../theme/index';
 
 const formatSubtitle = event => moment(event.timestamp).fromNow();
 
 /* Component ==================================================================== */
-const TimelineItem = ({ event, navigation }) => (
+const POIListItem = ({ location, navigation }) => (
   <ListItem
-    onPress={() => navigation.navigate('EventDetail', event)}
-    title={event.label}
-    subtitle={formatSubtitle(event)}
+    onPress={() => navigation.navigate('POIDetail', location)}
+    title={location.label}
+    subtitle={formatSubtitle(location)}
   />
 );
 
-TimelineItem.propTypes = { event: PropTypes.shape({}) };
-TimelineItem.componentName = 'TimelineItem';
+POIListItem.propTypes = { location: PropTypes.shape({}) };
+POIListItem.componentName = 'POIListItem';
 
 /* Export Component ==================================================================== */
-export default TimelineItem;
+export default POIListItem;

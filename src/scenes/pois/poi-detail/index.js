@@ -5,7 +5,7 @@ import fetch from 'fetch-everywhere';
 import { Actions } from 'react-native-router-flux';
 import Loading from '../../../components/general/Loading';
 import { AppStyles } from '@theme/';
-import EventDetail from '../../../components/timeline/event-detail';
+import EventDetail from '../../timeline/event-detail/component/index';
 
 class EventDetailContainer extends Component {
   static componentName = 'EventDetailContainer';
@@ -32,7 +32,7 @@ class EventDetailContainer extends Component {
   }
 
   componentDidMount() {
-    if(!this.state.event) {
+    if(!this.state.location) {
       fetch(`${process.env.SERVER_ADDR}/events/${this.props.eventId}`)
         .then(res => res.json())
         .then(event => {
@@ -43,13 +43,13 @@ class EventDetailContainer extends Component {
   }
 
   render() {
-    if(!this.state.event) {
+    if(!this.state.location) {
       return <Loading text='Loading event...' />;
     }
 
     return(
       <View style={[AppStyles.container]}>
-        <EventDetail event={this.state.event} navigation={this.props.navigation} />
+        <EventDetail event={this.state.location} navigation={this.props.navigation} />
       </View>
     );
   }

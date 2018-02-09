@@ -4,7 +4,7 @@ import fetch from 'fetch-everywhere';
 import moment from 'moment';
 import Loading from '../../components/general/Loading';
 import { AppStyles } from '../../theme';
-import Timeline from '../../components/timeline';
+import Timeline from './list';
 
 class TimelineContainer extends Component {
   static componentName = 'TimelineContainer';

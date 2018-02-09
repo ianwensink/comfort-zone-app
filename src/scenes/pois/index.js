@@ -11,23 +11,30 @@ class POISContainer extends Component {
   static componentName = 'POISContainer';
 
   state = {
-    events: false,
+    events: [],
+    points: [],
     query: '',
   };
 
   componentDidMount() {
-    fetch(`${process.env.SERVER_ADDR}/events`)
+    fetch(`${process.env.SERVER_ADDR}/heatmap`)
       .then(res => res.json())
-      .then(events => {
-        this.setState({ events });
+      .then((json) => {
+        this.setState(json);
       })
       .catch(console.error);
   }
 
   getLocations() {
     const events = this.state.events;
-    const locations = events.reduce((result, event) => ([...result, ...event.locations]), []);
-    return this.sortLocations(this.filterLocations(locations));
+    const allLocations = events.reduce((result, event) => {
+      const locations = event.locations.map(location => ({
+        ...location,
+        events: events.filter(e => e.locations.find(l => l._id === location._id)),
+      }));
+      return ([ ...result, ...locations ]);
+    }, []);
+    return this.sortLocations(this.filterLocations(allLocations));
   }
 
   filterLocations(locations) {
@@ -48,7 +55,7 @@ class POISContainer extends Component {
   }
 
   render() {
-    if(!this.state.events) {
+    if(this.state.events.length === 0) {
       return <Loading text='Loading events...' />;
     }
 

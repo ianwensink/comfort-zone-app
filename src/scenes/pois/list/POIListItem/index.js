@@ -5,20 +5,21 @@ import { ListItem } from 'react-native-elements';
 import moment from 'moment';
 
 // Consts and Libs
-import { AppStyles } from '../../../theme/index';
+import Indicator from './Indicator';
 
 const formatSubtitle = event => moment(event.timestamp).fromNow();
 
 /* Component ==================================================================== */
-const POIListItem = ({ location, navigation }) => (
+const POIListItem = ({ poi, navigation }) => (
   <ListItem
-    onPress={() => navigation.navigate('POIDetail', location)}
-    title={location.label}
-    subtitle={formatSubtitle(location)}
+    onPress={() => navigation.navigate('POIDetail', poi)}
+    title={poi.label}
+    subtitle={formatSubtitle(poi)}
+    badge={{ element: <Indicator poi={poi} /> }}
   />
 );
 
-POIListItem.propTypes = { location: PropTypes.shape({}) };
+POIListItem.propTypes = { poi: PropTypes.shape({}) };
 POIListItem.componentName = 'POIListItem';
 
 /* Export Component ==================================================================== */

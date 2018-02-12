@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ScrollView } from 'react-native';
 // Consts and Libs
-import POIListItem from './POIListItem';
+import POIListItem from './POIListItem/index';
 import { List, SearchBar } from 'react-native-elements';
 
 /* Component ==================================================================== */
@@ -22,7 +22,7 @@ const POIList = ({ locations, navigation, onSearch }) => {
         {locations.map(location =>
           <POIListItem
             key={location._id}
-            location={location}
+            poi={location}
             navigation={navigation}
           />
         )}

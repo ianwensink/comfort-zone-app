@@ -14,13 +14,10 @@ class TimelineContainer extends Component {
     query: '',
   };
 
-  componentDidMount() {
-    fetch(`${process.env.SERVER_ADDR}/events`)
-      .then(res => res.json())
-      .then(events => {
-        this.setState({ events });
-      })
-      .catch(console.error);
+  async componentDidMount() {
+    const events = await fetch(`${process.env.SERVER_ADDR}/events`)
+      .then(res => res.json());
+    this.setState({ events });
   }
 
   getEvents() {

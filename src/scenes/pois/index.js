@@ -16,21 +16,23 @@ class POISContainer extends Component {
     query: '',
   };
 
-  componentDidMount() {
-    fetch(`${process.env.SERVER_ADDR}/heatmap`)
-      .then(res => res.json())
-      .then((json) => {
-        this.setState(json);
-      })
-      .catch(console.error);
+  async componentDidMount() {
+    const json = await fetch(`${process.env.SERVER_ADDR}/heatmap`)
+      .then(res => res.json());
+    this.setState(json);
   }
 
   getLocations() {
-    const events = this.state.events;
+    const { events, points } = this.state;
     const allLocations = events.reduce((result, event) => {
       const locations = event.locations.map(location => ({
         ...location,
-        events: events.filter(e => e.locations.find(l => l._id === location._id)),
+        events: events.filter(e => e.locations.find(l => l._id === location._id)).map(event => {
+          return {
+            ...event,
+            points: points.filter(point => point.event === event._id).length,
+          }
+        }),
       }));
       return ([ ...result, ...locations ]);
     }, []);

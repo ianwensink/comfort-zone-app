@@ -1,17 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import CustomText from "../../../../../components/ui/Text";
+import { Image, View } from 'react-native';
+
+import Needle, { calculateTransform } from './styled/Needle';
 
 import { determineThreatLevel } from '../../../../../lib/indicator';
 
 const IndicatorComponent = ({ poi }) => {
+  const threatLevel = determineThreatLevel(poi.events);
+  console.log('threat level', threatLevel, calculateTransform(threatLevel));
   return (
-    <CustomText>{determineThreatLevel(poi.events)}</CustomText>
+    <View style={{ position: 'relative' }}>
+      <Image source={require('../../../../../images/gauge_without_needle.png')} style={{ width: 50, height: 25 }} />
+      <Needle
+        source={require('../../../../../images/gauge_needle.png')}
+        style={{ width: 16, height: 19 }}
+        value={threatLevel}
+      />
+    </View>
   );
 };
-
-IndicatorComponent.propTypes = {};
-
-IndicatorComponent.defaultProps = {};
 
 export default IndicatorComponent;

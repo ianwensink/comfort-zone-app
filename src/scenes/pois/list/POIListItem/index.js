@@ -14,7 +14,6 @@ const POIListItem = ({ poi, navigation }) => (
   <ListItem
     onPress={() => navigation.navigate('POIDetail', poi)}
     title={poi.label}
-    subtitle={formatSubtitle(poi)}
     badge={{ element: <Indicator poi={poi} /> }}
   />
 );

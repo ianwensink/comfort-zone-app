@@ -1,6 +1,6 @@
 const determineThreatLevel = (events) => {
-  // console.log(events);
-  return 1;
+  const points = events.reduce((count, event) => count + event.points, 0);
+  return points / 6.7;
 };
 
 export { determineThreatLevel };

@@ -4,21 +4,29 @@ import { Image } from 'react-native';
 const rotateOffset = -130;
 const calculateRotate = value => ((180 / 100) * value) + rotateOffset;
 
-const calculateX = value => {
-  if(value <= 25) return ((3 / 100) * value) + 7;
-  if(value <= 50) return ((7 / 100) * value) + 10;
-  if(value <= 75) return ((7 / 100) * value) + 17;
-  return ((3 / 100) * value) + 24;
+const formula = (diff, offset, value) => ((diff / 25) * value) + offset;
+
+const calculateX = v => {
+  if(v <= 25) return formula(3, 7, v);
+  if(v <= 50) return formula(7, 3, v);
+  if(v <= 75) return formula(7, 3, v);
+  return formula(3, 15, v);
 };
 
-const calculateY = value => {
-  if(value <= 25) return ((-7 / 100) * value) + 14;
-  if(value <= 50) return ((-2 / 100) * value) + 7;
-  if(value <= 75) return ((2 / 100) * value) + 5;
-  return ((7 / 100) * value) + 7;
+const calculateY = v => {
+  if(v <= 25) return formula(-7, 14, v);
+  if(v <= 50) return formula(-2, 9, v);
+  if(v <= 75) return formula(2, 1, v);
+  return formula(7, -14, v);
 };
 
-export const calculateTransform = value => `rotate(${calculateRotate(value)}deg) translate(${calculateX(value)}px, ${calculateY(value)}px)`;
+/**
+ * x = 50 y = 17
+ * x = 75 y = 24
+ * y = 0,28 * x + 3
+ * */
+
+const calculateTransform = value => `rotate(${calculateRotate(value)}deg) translate(${calculateX(value)}px, ${calculateY(value)}px)`;
 
 export default styled.Image`
   position: absolute;

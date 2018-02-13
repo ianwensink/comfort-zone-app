@@ -1,13 +1,12 @@
 import React from 'react';
 import { Image, View } from 'react-native';
 
-import Needle, { calculateTransform } from './styled/Needle';
+import Needle from './styled/Needle';
 
 import { determineThreatLevel } from '../../../../../lib/indicator';
 
 const IndicatorComponent = ({ poi }) => {
   const threatLevel = determineThreatLevel(poi.events);
-  console.log('threat level', threatLevel, calculateTransform(threatLevel));
   return (
     <View style={{ position: 'relative' }}>
       <Image source={require('../../../../../images/gauge_without_needle.png')} style={{ width: 50, height: 25 }} />

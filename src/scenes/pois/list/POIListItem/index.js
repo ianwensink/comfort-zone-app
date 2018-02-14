@@ -7,13 +7,18 @@ import moment from 'moment';
 // Consts and Libs
 import Indicator from './Indicator';
 
-const formatSubtitle = event => moment(event.timestamp).fromNow();
+// Components
+import NewsTicker from '../../../../components/NewsTicker';
+
+// const getSubtitleItems = poi => poi.events.filter(event => moment(event.timestamp).isAfter(moment().add(-24, 'hour'))).map(event => event.label);
+const getSubtitleItems = poi => poi.events.filter(event => moment(event.timestamp).isAfter(moment().add(-24, 'hour'))).map(event => event.label).join('');
 
 /* Component ==================================================================== */
 const POIListItem = ({ poi, navigation }) => (
   <ListItem
     onPress={() => navigation.navigate('POIDetail', poi)}
     title={poi.label}
+    subtitle={getSubtitleItems(poi)}
     badge={{ element: <Indicator poi={poi} /> }}
   />
 );

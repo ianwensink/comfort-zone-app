@@ -41,6 +41,7 @@ class HeatMap extends React.Component {
     this.remote = await connectToRemote();
 
     this.remote.emit('connected');
+    window.addEventListener('error', (err) => this.remote.emit('log', JSON.stringify(err)), true);
 
     this.remote.on('location', json => {
       const newState = {
@@ -145,6 +146,12 @@ class HeatMap extends React.Component {
           ref={c => this.map = c}
         >
           <MarkerLayer
+            markers={[this.state.currentPosition]}
+            latitudeExtractor={l => l.lat}
+            longitudeExtractor={l => l.lng}
+            markerComponent={CurrentPosition}
+          />
+          <MarkerLayer
             markers={this.state.events}
             latitudeExtractor={e => e.center.lat}
             longitudeExtractor={e => e.center.lng}
@@ -152,12 +159,6 @@ class HeatMap extends React.Component {
             propsForMarkers={{
               remote: this.remote,
             }}
-          />
-          <MarkerLayer
-            markers={[this.state.currentPosition]}
-            latitudeExtractor={l => l.lat}
-            longitudeExtractor={l => l.lng}
-            markerComponent={CurrentPosition}
           />
           <HeatmapLayer
             fitBoundsOnLoad

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { StatusBar, View } from 'react-native';
-import fetch from 'fetch-everywhere';
 import moment from 'moment';
 import Loading from '../../components/general/Loading';
 import { AppStyles } from '../../theme';
 import Timeline from './list';
+import fetch from '../../lib/fetch';
 
 class TimelineContainer extends Component {
   static componentName = 'TimelineContainer';
@@ -15,8 +15,7 @@ class TimelineContainer extends Component {
   };
 
   async componentDidMount() {
-    const events = await fetch(`${process.env.SERVER_ADDR}/events`)
-      .then(res => res.json());
+    const events = await fetch(`${process.env.SERVER_ADDR}/events`);
     this.setState({ events });
   }
 

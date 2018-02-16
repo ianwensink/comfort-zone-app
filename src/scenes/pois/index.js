@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { StatusBar, View } from 'react-native';
-import fetch from 'fetch-everywhere';
 import Loading from '../../components/general/Loading';
 import { AppStyles } from '../../theme';
 import POIList from './list';
 import { getDistance } from '../../lib/distance';
-import WatchPositionHOC from '../../hoc/WatchPositionHOC';
+import WatchPositionHOC from '../../hoc/WatchPositionHOC/index';
+import fetch from '../../lib/fetch';
 
 class POISContainer extends Component {
   static componentName = 'POISContainer';
@@ -17,8 +17,7 @@ class POISContainer extends Component {
   };
 
   async componentDidMount() {
-    const json = await fetch(`${process.env.SERVER_ADDR}/heatmap`)
-      .then(res => res.json());
+    const json = await fetch(`${process.env.SERVER_ADDR}/heatmap`);
     this.setState(json);
   }
 

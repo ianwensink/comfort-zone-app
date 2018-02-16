@@ -137,6 +137,9 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-push-notification')
+    compile project(':react-native-background-geolocation')
+    compile project(':react-native-background-fetch')
     compile project(':react-native-maps')
     compile project(':react-native-google-analytics-bridge')
     compile project(':react-native-device-info')

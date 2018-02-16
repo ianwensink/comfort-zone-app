@@ -50,14 +50,6 @@ export const TimelineStack = StackNavigator({
 );
 
 export const Tabs = TabNavigator({
-  POIS: {
-    screen: POISContainer,
-    navigationOptions: {
-      title: 'POI\'s',
-      tabBarLabel: 'POI\'s',
-      tabBarIcon: ({ tintColor }) => <Icon name='place' size={26} color={tintColor} />
-    },
-  },
   Map: {
     screen: MapStack,
     navigationOptions: {
@@ -65,6 +57,14 @@ export const Tabs = TabNavigator({
       header: null,
       tabBarLabel: 'Map',
       tabBarIcon: ({ tintColor }) => <Icon name='map' size={26} color={tintColor} />,
+    },
+  },
+  POIS: {
+    screen: POISContainer,
+    navigationOptions: {
+      title: 'POI\'s',
+      tabBarLabel: 'POI\'s',
+      tabBarIcon: ({ tintColor }) => <Icon name='place' size={26} color={tintColor} />
     },
   },
   Timeline: {

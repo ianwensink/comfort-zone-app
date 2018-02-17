@@ -1311,12 +1311,12 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = X93GGSJZYU;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				INFOPLIST_FILE = ComfortZone/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1340,12 +1340,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = X93GGSJZYU;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				INFOPLIST_FILE = ComfortZone/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

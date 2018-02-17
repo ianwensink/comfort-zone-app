@@ -19,7 +19,7 @@ class MapView extends Component {
 
     const json = await fetch(`${process.env.SERVER_ADDR}/heatmap`);
     await this.processEvents(json);
-    console.log(await this.locationService.getGeoFences());
+    // console.log(await this.locationService.getGeoFences());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -30,13 +30,16 @@ class MapView extends Component {
 
   processEvents = async ({ events, points }) => {
     events
-      .map(event => ({ ...event, points: points.filter(point => point.event === event._id).length }))
+      .map(event => ({
+        ...event,
+        points: points.filter(point => point.event === event._id).reduce((total, point) => total + point.val, 0),
+      }))
       .forEach(async (event) => {
         const geofence = {
           identifier: event._id,
           latitude: event.center.lat,
           longitude: event.center.lng,
-          radius: 800,
+          radius: 600,
           notifyOnEntry: true,
           notifyOnExit: false,
           notifyOnDwell: false,
@@ -48,7 +51,11 @@ class MapView extends Component {
   };
 
   onGeofence = (geofence) => {
-    this.locationService.notify(`There is an event near you. Tap for more info.\n\r${geofence.extras.label}`);
+    this.locationService.notify({
+      title: 'Event alert',
+      message: `There is an event near you. Tap for more info.\n\r${geofence.extras.label}`,
+      okAction: () => this.props.navigation.navigate('EventDetail', geofence.extras),
+    });
   };
 
   async setUpMsgChannel() {

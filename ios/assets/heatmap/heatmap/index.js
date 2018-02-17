@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import fetch from 'fetch-everywhere';
 import { Map, TileLayer } from 'react-leaflet';
 import HeatmapLayer from 'react-leaflet-heatmap-layer';
@@ -8,7 +8,7 @@ import CurrentPosition from '../current-position';
 import LocationController from '../LocationController';
 import { connectToRemote } from 'react-native-webview-messaging/web';
 
-class HeatMap extends React.Component {
+class HeatMap extends Component {
   lastFetch = null;
   mounted = false;
 
@@ -16,8 +16,8 @@ class HeatMap extends React.Component {
     points: [],
     events: [],
     spot: 'london_bridge',
-    event: '2',
-    interactive: false,
+    event: '5a8867d653799850705392fa',
+    interactive: true,
     followCurrentPosition: true,
     currentPosition: {
       lat: 51.5035658,
@@ -67,7 +67,7 @@ class HeatMap extends React.Component {
     if(!this.lastFetch) {
       this.lastFetch = now;
     }
-    if(this.lastFetch + 60000 < now) { // Fetch every minute
+    if(this.lastFetch + 1000 < now) { // Fetch every minute
       this.lastFetch = now;
       this.fetchPoints();
     }
@@ -77,10 +77,16 @@ class HeatMap extends React.Component {
   fetchPoints() {
     fetch(`${process.env.SERVER_ADDR}/heatmap`)
       .then(res => res.json())
-      .then(response => {
+      .then(({ events, points }) => {
+        const processedEvents = events
+          .map(event => ({
+            ...event,
+            points: points.filter(point => point.event === event._id).reduce((total, point) => total + point.val, 0),
+          }));
+
         this.setState({
-          points: response.points,
-          events: response.events,
+          points,
+          events: processedEvents,
         });
       });
   }
@@ -100,8 +106,7 @@ class HeatMap extends React.Component {
         'Content-Type': 'application/json',
       }),
       body: JSON.stringify({
-        spot: this.state.spot,
-        event: this.state.location,
+        event: this.state.event,
         location: {
           lat: e.latlng.lat,
           lng: e.latlng.lng,

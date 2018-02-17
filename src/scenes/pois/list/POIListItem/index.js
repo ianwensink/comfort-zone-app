@@ -16,10 +16,10 @@ const getSubtitleItems = poi => poi.events.filter(event => moment(event.timestam
 /* Component ==================================================================== */
 const POIListItem = ({ poi, navigation }) => (
   <ListItem
-    onPress={() => navigation.navigate('POIDetail', poi)}
+    onPress={() => navigation.navigate('EventDetail', poi.events[0])}
     title={poi.label}
     subtitle={getSubtitleItems(poi)}
-    badge={{ element: <Indicator poi={poi} /> }}
+    badge={{ element: <Indicator events={poi.events} /> }}
   />
 );
 

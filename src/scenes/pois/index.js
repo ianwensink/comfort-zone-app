@@ -29,7 +29,7 @@ class POISContainer extends Component {
         events: events.filter(e => e.locations.find(l => l._id === location._id)).map(event => {
           return {
             ...event,
-            points: points.filter(point => point.event === event._id).length,
+            points: points.filter(point => point.event === event._id).reduce((total, point) => total + point.val, 0),
           }
         }),
       }));

@@ -1,22 +1,29 @@
 import React from 'react';
-import { Image, View } from 'react-native';
+import { Image } from 'react-native';
 
 import Needle from './styled/Needle';
+import Wrapper from './styled/wrapper';
 
 import { determineThreatLevel } from '../../../../../lib/indicator';
 
-const IndicatorComponent = ({ poi }) => {
-  const threatLevel = determineThreatLevel(poi.events);
+const width = 50;
+
+const IndicatorComponent = ({ events, scale }) => {
+  const threatLevel = determineThreatLevel(events);
   return (
-    <View style={{ position: 'relative' }}>
-      <Image source={require('../../../../../images/gauge_without_needle.png')} style={{ width: 50, height: 25 }} />
+    <Wrapper scale={scale} style={{ position: 'relative', width, height: width / 2 }}>
+      <Image source={require('../../../../../images/gauge_without_needle.png')} style={{ width, height: width / 2 }} />
       <Needle
         source={require('../../../../../images/gauge_needle.png')}
-        style={{ width: 16, height: 19 }}
+        style={{ width: width / 3, height: width / 3 * 1.18  }}
         value={threatLevel}
       />
-    </View>
+    </Wrapper>
   );
+};
+
+IndicatorComponent.defaultProps = {
+  scale: 1,
 };
 
 export default IndicatorComponent;

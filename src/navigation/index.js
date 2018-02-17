@@ -21,7 +21,7 @@ export const MapStack = StackNavigator({
     Map: {
       screen: Map,
       navigationOptions: {
-        title: 'Map',
+        title: 'Comfort Zone',
       },
     },
     EventDetail: {

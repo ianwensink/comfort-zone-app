@@ -7,8 +7,8 @@ export default (WrapperComponent) => {
 
     state = {
       currentPosition: {
-        lat: 0,
-        lng: 0,
+        lat: 51.509324,
+        lng: -0.127032,
       }
     };
     

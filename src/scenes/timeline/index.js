@@ -15,8 +15,12 @@ class TimelineContainer extends Component {
   };
 
   async componentDidMount() {
-    const events = await fetch(`${process.env.SERVER_ADDR}/events`);
-    this.setState({ events });
+    const { events, points } = await fetch(`${process.env.SERVER_ADDR}/heatmap`);
+    const processedEvents = events.map(event => ({
+      ...event,
+      points: points.filter(point => point.event === event._id).reduce((total, point) => total + point.val, 0),
+    }));
+    this.setState({ events: processedEvents });
   }
 
   getEvents() {

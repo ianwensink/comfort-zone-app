@@ -16,16 +16,16 @@ class HeatMap extends Component {
     points: [],
     events: [],
     spot: 'london_bridge',
-    event: '5a8867d653799850705392fa',
+    event: '5a886eaca58fc7511e1c8cfa',
     interactive: true,
     followCurrentPosition: true,
     currentPosition: {
-      lat: 51.5035658,
-      lng: -0.0888642,
+      lat: 51.509324,
+      lng: -0.127032,
     },
     latestPosition: {
-      lat: 51.5035658,
-      lng: -0.0888642,
+      lat: 51.509324,
+      lng: -0.127032,
     },
     latestZoom: 15,
   };
